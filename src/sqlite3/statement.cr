@@ -78,9 +78,11 @@ class SQLite3::Statement < DB::Statement
   end
 
   private def bind_arg(index, tuple : Tuple)
-      k, v = tuple
-      idx = LibSQLite3.bind_parameter_index(self, ":#{k.to_s}")
-      bind_arg(idx, v)
+    k, v = tuple
+    idx = LibSQLite3.bind_parameter_index(self, ":#{k.to_s}")
+    bind_arg(idx, v)
+  rescue e : SQLite3::Exception
+    raise e unless e.message.try(&.starts_with? "column index out of range")
   end
 
   private def check(code)
