@@ -77,6 +77,12 @@ class SQLite3::Statement < DB::Statement
     raise "#{self.class} does not support #{value.class} params"
   end
 
+  private def bind_arg(index, tuple : Tuple)
+      k, v = tuple
+      idx = LibSQLite3.bind_parameter_index(self, ":#{k.to_s}")
+      bind_arg(idx, v)
+  end
+
   private def check(code)
     raise Exception.new(sqlite3_connection) unless code == 0
   end

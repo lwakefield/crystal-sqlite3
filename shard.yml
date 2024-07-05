@@ -4,7 +4,7 @@ version: 0.21.0
 dependencies:
   db:
     github: crystal-lang/crystal-db
-    version: ~> 0.13.0
+    commit: 532ae07
 
 authors:
   - Ary Borenszweig <aborenszweig@manas.tech>
